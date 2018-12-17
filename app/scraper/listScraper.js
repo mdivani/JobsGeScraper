@@ -4,11 +4,13 @@ const url = 'http://jobs.ge';
 
 const jobsList = [];
 
-const jobsScraper = () => rp(url)
+// scrapVip if true function scraps VIP entries else regular entries are scraped
+const jobsListScraper = (scrapVip = true) => rp(url)
 .then(function(html){
     //success!
+    const selector = scrapVip ? "vipEntries" : "regularEntries";
     const $ = cheerio.load(html);
-    $(".vipEntries tr").each((index, element) => {
+    $(`.${selector} tr`).each((index, element) => {
         if (index > 0) {
             jobsList[index - 1] = {};
             jobsList[index - 1]["id"] = $(element).find("td a").first().attr("href").replace(/\//g, "");
@@ -25,4 +27,4 @@ const jobsScraper = () => rp(url)
     console.error(err);
 });
 
-module.exports = jobsScraper;
+module.exports = jobsListScraper;

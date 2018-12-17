@@ -1,3 +1,4 @@
-const vipListScraper = require("./scraper/vipListScraper");
+const listScraper = require("./scraper/listScraper");
 
-vipListScraper().then((list) => console.log(list));
+const scrapVip = false;
+listScraper(scrapVip).then((list) => console.log(list.length));
